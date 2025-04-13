@@ -16,15 +16,15 @@ class Item:
     
     def __repr__(self):
         return (
-            f"({self.code}) {self.name} - €{self.preco:.2f}"
+            f"({self.code}) {self.name} - €{self.price:.2f}"
         )
 
 class Inventory:
     def __init__(self):
         self.items = {}  
 
-    def add_item(self, code, name, preco):
-        self.items[code] = Item(code, name, preco)
+    def add_item(self, code, name, price):
+        self.items[code] = Item(code, name, price)
     def get_item(self, code):
         return self.items.get(code)
 
