@@ -40,3 +40,20 @@ customers = [
         ],
     }
 ]
+
+def find_highest_buyer(customers, item_to_buy: int):
+    highest_quantity = 0
+    highest_customer = None
+
+    for customer in customers:
+        for item in customer["shopping_cart"]:
+            if item["item_id"] == item_to_buy and item["quantity"] > highest_quantity:
+                highest_quantity = item["quantity"]
+                highest_customer = customer["name"]
+
+    return highest_customer, highest_quantity if highest_customer else None
+
+    def find_item_name(item_id):
+    for item in items:
+        if item["item_id"] == item_id:
+            return item["name"]
