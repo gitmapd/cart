@@ -7,4 +7,5 @@ def load_items_from_file(file_path, inventory):
             nome = row['nome']
             preco = float(row['preco'])
             stock = row['stock']
-            inventory.add_item(codigo, nome, preco, stock)
+            category = row['category']
+            inventory.add_item(codigo, nome, preco, stock, category)

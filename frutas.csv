@@ -1,4 +1,4 @@
-codigo,nome,preco,stock
+codigo,nome,preco,stock,category
 F1,abacate,1.00,1
 F2,amora,2.00,2
 F3,ameixa,3.00,3

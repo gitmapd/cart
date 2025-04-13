@@ -9,23 +9,22 @@ from loader import load_items_from_file
 
 console = Console()
 class Item:
-    def __init__(self, code, name, stock, price):
+    def __init__(self, code, name, stock, price, category):
         self.code = code
         self.name = name
         self.stock = stock
         self.price = price
+        self.category = category
     
     def __repr__(self):
-        return (
-            f"({self.code}) {self.name} {int(self.stock)} - €{self.price:.2f}"
-        )
+        return f"({self.code}) {self.name} {self.stock} {float(self.price):.2f} {self.category}"
 
 class Inventory:
     def __init__(self):
         self.items = {}  
 
-    def add_item(self, code, name, price, stock):
-        self.items[code] = Item(code, name, price, stock)
+    def add_item(self, code, name, price, stock, category):
+        self.items[code] = Item(code, name, price, stock, category)
     def get_item(self, code):
         return self.items.get(code)
 
@@ -46,7 +45,13 @@ class Inventory:
             return True
         return False
    
+class Category:
+    def __init__(self, name, description=""):
+        self.name = name
+        self.description = description
 
+    def __str__(self):
+        return f"{self.name} - {self.description}"
 
 def main():
     inventory  = Inventory()
@@ -60,12 +65,12 @@ def main():
 
     #console.rule("Frutas", style="bold yellow")
     #console.print(prod_table)
-    inventory.add_item("F44","Tangerina",20,2)
+    inventory.add_item("F44","Tangerina",20,2,"frutas")
     #apple2=inventory.get_item("F44")
     #inventory.update_price("F2",30)
     #apple2 =inventory.get_item("F2")
-    inventory.reduce_stock("F2",3)
-    apple2=inventory.get_item("F2")
+    #inventory.reduce_stock("F2",3)
+    apple2=inventory.get_item("F44")
     print(apple2)
 
 if __name__ == '__main__':
