@@ -1,0 +1,42 @@
+items = [
+    {"item_id": 101, "name": "butter"},
+    {"item_id": 102, "name": "carrots"},
+]
+customers = {
+    "customer1": {
+        "name": "John Doe",
+        "id": 1,
+        "shopping_cart": [
+            {"item_id": 101, "quantity": 2},
+            {"item_id": 102, "quantity": 1},
+        ],
+    },
+    "customer2": {
+        "name": "Jane Smith",
+        "id": 2,
+        "shopping_cart": [
+            {"item_id": 101, "quantity": 1},
+            {"item_id": 102, "quantity": 30},
+        ],
+    }
+}
+
+# if you want a list of customers instead of a dict you can use:
+customers = [
+    {
+        "name": "John Doe",
+        "id": 1,
+        "shopping_cart": [
+            {"item_id": 101, "quantity": 2},
+            {"item_id": 102, "quantity": 1},
+        ],
+    },
+    {
+        "name": "Jane Smith",
+        "id": 2,
+        "shopping_cart": [
+            {"item_id": 101, "quantity": 1},
+            {"item_id": 102, "quantity": 30},
+        ],
+    }
+]
