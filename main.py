@@ -40,8 +40,8 @@ def main():
     item = Item()
     item.set_item({"item_id": 101, "name": "butter"},)
     items.items.append(item)
-    for v in items.items:
-        print(v[item['item_id']])
+    for i in range(len(items.items)):
+        print(item.item['name'])
         
     
     print()
