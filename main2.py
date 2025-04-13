@@ -53,6 +53,62 @@ class Category:
     def __str__(self):
         return f"{self.name} - {self.description}"
 
+class ShoppingCart:
+    def __init__(self):
+        self.items = defaultdict(int)
+    def add_item(self,item_code, quantity=1):
+        self.items[item_code] += quantity
+    def remove_item(self,item_code, quantity=1):
+        if item_code in self.items:
+            self.items[item_code] -= quantity
+            if self.items[item_code] <= 0:
+                del self.items[item_code]
+    def __repr__(self):
+        return f"Cart: {dict(self.items)}"
+class Customer:
+    def __init__(self, customer_id, name):
+        self.customer_id = customer_id
+        self.name = name
+        self.cart = ShoppingCart()
+        self.purchase_history = []
+
+    def add_to_cart(self, item_code, quantity=1):
+        self.cart.add_item(item_code, quantity)
+
+
+    def checkout(self):
+        timestamp = datetime.now()
+        purchased_items = self.cart.get_items()
+        self.purchase_history.append((timestamp, purchased_items))
+        self.cart.clear_cart()
+        return timestamp, purchased_items
+
+    def __repr__(self):
+        return f"{self.name} (ID: {self.customer_id})"
+class Sales:
+    def __init__(self):
+        self.customers = {}
+        self.sales_log = []
+
+    def add_customer(self, customer_id, name):
+        if customer_id not in self.customers:
+            self.customers[customer_id] = Customer(customer_id, name)
+    def get_customer(self, customer_id):
+        return self.customers.get(customer_id)
+    
+    def record_sale(self, customer_id):
+        customer = self.get_customer(customer_id)
+        if customer:
+            timestamp, items = customer.checkout()
+            self.sales_log.append((customer_id, timestamp, items))
+            return timestamp, items
+        return None
+    def sales_by_customer(self, customer_id):
+        return [sale for sale in self.sales_log if sale[0] == customer_id]
+    def all_sales(self):
+        return self.sales_log
+    def __repr__(self):
+        return f"Sales Log: {self.sales_log}"
 def main():
     inventory  = Inventory()
     load_items_from_file("frutas.csv",inventory)
@@ -70,8 +126,17 @@ def main():
     #inventory.update_price("F2",30)
     #apple2 =inventory.get_item("F2")
     #inventory.reduce_stock("F2",3)
-    apple2=inventory.get_item("F44")
-    print(apple2)
+    #inventory.reduce_stock("F44",10)
+    #apple2=inventory.get_item("F44")
+    #print(apple2)
+    sales = Sales()
+    sales.add_customer(101, "Alice")
+    sales.get_customer(101).add_to_cart("F44", 2)
+    sales.get_customer(101).add_to_cart("F43", 1)
+# Checkout and record the sale
+    sales.record_sale("F43")
+    print(sales.sales_by_customer(101))
+    print(sales.all_sales())
 
 if __name__ == '__main__':
         main()
