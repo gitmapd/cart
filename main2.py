@@ -2,7 +2,7 @@ from collections import defaultdict
 from datetime import datetime
 import rich
 from rich import table, prompt
-import datetime
+from datetime import datetime
 from rich.progress import track
 from rich.console import Console
 from loader import load_items_from_file
@@ -63,6 +63,11 @@ class ShoppingCart:
             self.items[item_code] -= quantity
             if self.items[item_code] <= 0:
                 del self.items[item_code]
+    def clear_cart(self):
+        self.items.clear()
+
+    def get_items(self):
+        return dict(self.items)
     def __repr__(self):
         return f"Cart: {dict(self.items)}"
 class Customer:
@@ -85,6 +90,7 @@ class Customer:
 
     def __repr__(self):
         return f"{self.name} (ID: {self.customer_id})"
+
 class Sales:
     def __init__(self):
         self.customers = {}
@@ -93,9 +99,10 @@ class Sales:
     def add_customer(self, customer_id, name):
         if customer_id not in self.customers:
             self.customers[customer_id] = Customer(customer_id, name)
+
     def get_customer(self, customer_id):
         return self.customers.get(customer_id)
-    
+
     def record_sale(self, customer_id):
         customer = self.get_customer(customer_id)
         if customer:
@@ -103,10 +110,12 @@ class Sales:
             self.sales_log.append((customer_id, timestamp, items))
             return timestamp, items
         return None
-    def sales_by_customer(self, customer_id):
-        return [sale for sale in self.sales_log if sale[0] == customer_id]
+
     def all_sales(self):
         return self.sales_log
+
+    def sales_by_customer(self, customer_id):
+        return [sale for sale in self.sales_log if sale[0] == customer_id]
     def __repr__(self):
         return f"Sales Log: {self.sales_log}"
 def main():
@@ -134,7 +143,7 @@ def main():
     sales.get_customer(101).add_to_cart("F44", 2)
     sales.get_customer(101).add_to_cart("F43", 1)
 # Checkout and record the sale
-    sales.record_sale("F43")
+    sales.record_sale(101)
     print(sales.sales_by_customer(101))
     print(sales.all_sales())
 
