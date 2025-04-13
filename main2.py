@@ -1,15 +1,15 @@
 from collections import defaultdict
 from datetime import datetime
-
+from loader import load_items_from_file
 class Item:
     def __init__(self, codigo, nome, preco):
         self.codigo = codigo
         self.nome = nome
         self.preco = preco
     
-    def __str__(self):
+    def __repr__(self):
         return (
-            f"{self.nome} ({self.codigo}) - €{self.preco:.2f}"
+            f"({self.codigo}) {self.nome} - €{self.preco:.2f}"
         )
 
 class Inventory:
@@ -22,13 +22,15 @@ class Inventory:
         return self.items.get(codigo)
 
 
-    def __str__(self):
+    def __repr__(self):
         return f"{self.nome} - {self.descricao}"
+
+   
 
 inventory  = Inventory()
 
-inventory.add_item("F1", "Maca", 1.00)
+load_items_from_file("frutas.csv",inventory)
 
-apple =inventory.get_item("F1")
+apple =inventory.get_item("F2")
 print(apple)
 
