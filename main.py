@@ -44,12 +44,10 @@ def main():
     prod_table = table.Table(show_header=True, header_style="bold magenta", expand=True, highlight=True)
     prod_table.add_column("Código", justify="center")
     prod_table.add_column("Nome", justify="center")
-    for i in track(range(len(items.items)), description="A Processar..."):
-            its = items.items[i].item
-            print(its['name'])
-            
-            #it = '  '.join(str(x['item_id']).ljust(3) for x in bet)
-            #prod_table.add_row('Aposta '+str(i + 1),it)
+    for k,v in track(item.item.items(), description="A Processar..."):
+            print(v[1])
+            #it = '  '.join(str(x['name']).ljust(3) for x in  v)
+            #prod_table.add_row('Nome',str(v['name']))
 
     console.rule("Boletim", style="bold yellow")
     console.print(prod_table)
